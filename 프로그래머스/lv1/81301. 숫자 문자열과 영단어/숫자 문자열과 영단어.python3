@@ -1,0 +1,15 @@
+def solution(s):
+    answer = ''
+    temp = ''
+    for char in s:
+        if char in numbers:
+            answer += char
+        else:
+            temp += char
+            if temp in number:
+                answer += str(number.index(temp))
+                temp = ''
+    return int(answer)
+
+number = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']
+numbers = ['0', '1', '2','3','4','5','6','7','8','9']
