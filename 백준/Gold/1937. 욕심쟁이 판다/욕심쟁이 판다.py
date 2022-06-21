@@ -3,29 +3,33 @@ import sys
 input = sys.stdin.readline
 sys.setrecursionlimit(10 ** 6)
 
-
 def dfs(x, y):
-    if dp[x][y]: return dp[x][y] # 이미 한번 왔다간 경로는 그대로 리턴
+    if dp[x][y]: 
+        return dp[x][y] # 이미 갔으면 다시 가지 않기
     dp[x][y] = 1
-    for i in range(4):
-        nx = x + dx[i]
-        ny = y + dy[i]
-        if 0 <= nx < n and 0 <= ny < n and arr[x][y] < arr[nx][ny]:
+    for idx in range(4):
+        nx = x + dx[idx]
+        ny = y + dy[idx]
+        if 0 <= nx < N and 0 <= ny < N and arr[x][y] < arr[nx][ny]:
             dp[x][y] = max(dp[x][y], dfs(nx, ny) + 1)
     return dp[x][y]
 
 
-n = int(input())
+
+
+
+
+N = int(input())
 arr = []
-for _ in range(n):
+for _ in range(N):
     arr.append(list(map(int, input().split())))
-dx = [-1, 0, 0, 1]
-dy = [0, -1, 1, 0]
-dp = [[0] * n for _ in range(n)]
+# print(arr)
+dp = [[0] * N for _ in range(N)]
+dx = [-1, 1, 0, 0]
+dy = [0, 0, -1, 1]
 
 answer = 0
-for i in range(n):
-    for j in range(n):
-        answer = max(answer, dfs(i, j))
-
+for i in range(N):
+    for j in range(N):
+        answer = max(dfs(i, j), answer)
 print(answer)
