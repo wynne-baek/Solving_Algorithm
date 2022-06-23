@@ -20,7 +20,7 @@ T = int(input())
 modulo = 10**9 + 7
 for _ in range(T):
     N = int(input())
-    if N >= 2:
+    if N > 2:
         print(power(N-2))
     else:
         print(1)
