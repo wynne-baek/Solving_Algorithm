@@ -1,59 +1,22 @@
 import sys
+input = sys.stdin.readline
 
-def find(a):
-    if parent[a] != a:
-        return find(parent[a])
-    return a
+n, m = map(int, input().split())
+knowList = set(input().split()[1:])
+parties = []
 
-def union(a, b):
-    a = find(a)
-    b = find(b)
-    if a < b:
-        parent[b] = a
-    else:
-        parent[a] = b
+for _ in range(m):
+    parties.append(set(input().split()[1:]))
 
+for _ in range(m):
+    for party in parties:
+        if party & knowList:
+            knowList = knowList.union(party)
 
-N, M = map(int, input().split())
-know_list = list(map(int, input().split()))
-know_cnt, know = know_list[0], know_list[1:]
-parent = [i for i in range(N+1)]
+cnt = 0
+for party in parties:
+    if party & knowList:
+        continue
+    cnt += 1
 
-party_cnt = 0
-if not know_cnt:
-    party_cnt = M
-else:
-    head = min(know)
-    for num in know:
-        parent[num] = head
-    parties = []
-    for _ in range(M):
-        party_list = list(map(int, input().split()))
-        party_people, party = party_list[0], party_list[1:]
-        parties.append(party)
-        for j in range(0, len(party) - 1):
-            for k in range(j + 1, len(party)):
-                union(party[j], party[k])
-
-    true = []
-    head_p = find(head)
-    for i in range(1, N+1):
-        if find(i) == head_p:
-            true.append(i)
-    for i in range(0, len(parties)):
-        flag = True
-        for j in range(0, len(parties[i])):
-            if parties[i][j] in true:
-                flag = False
-                break
-        # ban_list에 전부 없는 경우만 정답
-        if flag:
-            party_cnt += 1
-print(party_cnt)
-
-
-
-
-
-
-
+print(cnt)
